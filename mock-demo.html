@@ -19,7 +19,7 @@
         <br>
         <button id="app">提交</button>
     </div>
-    <div id="result"></div>
+    <pre id="result"></pre>
 
     <script>
         $('#app').on('click', function () {
@@ -56,7 +56,7 @@
                         "title": random.ctitle(10, 15),
                         "catalog": random.ctitle(3, 5),
                         "fav": 20,
-                        "created": parseInt(random.date('T') / 1000),
+                        "created": "@datetime",
                         "isEnd|1": true,
                         "answer|1-1000": 1,
                         "user": {
