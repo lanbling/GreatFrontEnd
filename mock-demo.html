@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>homework</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+    <script src="http://mockjs.com/dist/mock.js"></script>
+</head>
+
+<body>
+    <div>
+        <label for="page">页码</label>
+        <input id="page" type="number" />
+        <br>
+        <label for="num">数量</label>
+        <input id="num" type="number" />
+        <br>
+        <button id="app">提交</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        $('#app').on('click', function () {
+            var page = $('#page').val();
+            var num = $('#num').val();
+            if (!page || !num) {
+                alert('清输入页码和数量'); return;
+            }
+            $.ajax({
+                url: 'http://www.yourdomain.com/getList',
+                data: {
+                    page: page,
+                    num: num,
+                },
+                type: 'post',
+                dataType: 'json'
+            }).done(function (data, status, xhr) {
+                $('#result').html(JSON.stringify(data, null, 4));
+            })
+        });
+
+        var obj = [{ aa: 11, bb: 22, cc: 33, dd: 44 }];
+        var random = Mock.Random;
+        var userInfo = {
+
+        };
+        Mock.mock('http://www.yourdomain.com/getList', function (options) {
+            var params = getParams(options.body);
+            return Mock.mock({
+                "status": 0,
+                [`data|${params.num}`]: [
+                    {
+                        "tid|1-1000": 1,
+                        "title": random.ctitle(10, 15),
+                        "catalog": random.ctitle(3, 5),
+                        "fav": 20,
+                        "created": parseInt(random.date('T') / 1000),
+                        "isEnd|1": true,
+                        "answer|1-1000": 1,
+                        "user": {
+                            "avatar": random.image('720x300', '#00405d', '#FFF', '罗湖'),
+                            "name": random.cname(),
+                            "isVip|1": true,
+                            "level|1-10": 1
+                        }
+                    }
+                ],
+                "msg": "返回Mock数据"
+            })
+        });
+
+        function getParams(str){
+            if(typeof str !== 'string')return;
+            var list = str.split("&");
+            var obj = list.reduce(function(preValue,item){
+                var itemList = item.split('=');
+                preValue[itemList[0]] = itemList[1];
+                return preValue
+            }, {});
+            return obj;
+        }
+    </script>
+</body>
+
+</html>
