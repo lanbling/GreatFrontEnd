@@ -4,7 +4,7 @@
       <div class="layui-tab layui-tab-brief" lay-filter="user">
         <ul class="layui-tab-title">
           <li>
-            <router-link :to="{name: 'login'}">登入</router-link>
+            <router-link :to="{name: 'login'}">登录</router-link>
           </li>
           <li class="layui-this">
             找回密码
@@ -106,6 +106,7 @@
 
 <script>
 import { getCode, sendMail } from '@/api/index';
+import uuid from "uuid/v4";
 
 export default {
   name: 'forget',
@@ -116,12 +117,11 @@ export default {
       svg: '',
     }
   },
-  created(){
-    this.getCode();
-  },
   methods: {
     getCode(){
-      getCode().then(res => {
+      let sid = this.$store.state.sid;
+      getCode(sid).then(res => {
+        console.log(sid);
         this.svg = res.data.data;
       });
     },

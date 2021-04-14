@@ -1,27 +1,29 @@
-import axios from 'axios'
 
-const getCode = async () => {
-    let result = '';
-    try {
-        result = await axios.get('/getCaptcha');
-        if(result.status == 200){
-            return result.data;
+import axios from '@/utils/request';
+
+// 获取验证码
+const getCode = (sid) => {
+    return axios.get('/auth/getCaptcha', {
+        params: {
+            sid: sid
         }
-    }catch(e){
-        console.log(e);
-    }
+    })
 }
 
-const sendMail = async (data) => {
-    let result = '';
-    try{
-        result = await axios.post('/forget', data);
-        if(result.status === 200){
-            return result.data;
-        }
-    }catch(e){
-        console.log(e);
-    }
+function login(params){
+    return axios.post('/auth/login', {
+        ...params
+    })
 }
 
-export { getCode, sendMail }
+function sendMail(params){
+    return axios.post('/auth/forget', {
+        ...params
+    })
+}
+
+export {
+    getCode,
+    login,
+    sendMail
+}
