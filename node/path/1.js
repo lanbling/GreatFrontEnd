@@ -1,6 +1,13 @@
-const path = require('path')
+const path = require('path');
 
-let name = path.dirname('/path/a/1')
-console.log(name)
+// let name = path.resolve('/foo/bar', './baz');
 
-// 获取目录名
+let name = path.resolve('/wwwroot', 'tmp/file/');
+// 为啥这种resolve后为D:\tmp\file
+// 区别在于是否有/开头。有的话就是它们自己为主。
+// 没有的话就当前目录路径
+
+// let name = path.resolve('wwwroot', 'static_files/png/');
+
+console.log(name);
+

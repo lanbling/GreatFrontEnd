@@ -1,6 +1,7 @@
-const path = require('path')
+const path = require('path');
 
-let name = path.extname('/path/example/index.11.22.33') // .js
+let name = path.relative('/path/example/index.js', '/example');
+
 console.log(name);
 
-// 获取扩展名，最后一个点的
+// 不理解这个api的含义，以后再看
