@@ -1,0 +1,11 @@
+version: "3"
+services:
+ redis-test1:
+  image: "redis"
+  restart: always
+  container_name: "redis-test1"
+  ports:
+   - 15002:6379
+  volumes:
+   - /home/redistest:/data
+  command: ["redis-server", "--requirepass", "123456"]
